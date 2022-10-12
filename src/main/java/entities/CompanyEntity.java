@@ -3,33 +3,33 @@ package entities;
 import jakarta.persistence.*;
 
 //Define entity and table name
-@Entity(name="company")
-@Table(name="company")
-public class Company {
+@Entity(name = "company")
+@Table(name = "company")
+public class CompanyEntity {
 
     //Define columns
     @Id
-    @Column(name = "idCompany",nullable = false)
+    @Column(name = "id_company", nullable = false)
     private int id;
 
-    @Column(name = "coName", nullable = false,length = 45)
+    @Column(name = "company_name", nullable = false, length = 45)
     private String name;
 
-    @Column(name = "phoneNumber",nullable = false,length = 45)
+    @Column(name = "phone_number", nullable = false, length = 45)
     private String phoneNumber;
 
-    @Column(name = "email",nullable = false,length = 45)
+    @Column(name = "email", nullable = false, length = 45)
     private String email;
 
-    @Column(name = "address",length = 45)
+    @Column(name = "address", length = 45)
     private String address;
 
     //empty constructor
-    public Company() {
+    public CompanyEntity() {
     }
 
     //constructor
-    public Company(int id, String name, String phoneNumber, String email) {
+    public CompanyEntity(int id, String name, String phoneNumber, String email) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -53,7 +53,7 @@ public class Company {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
+    public String getPhone() {
         return phoneNumber;
     }
 

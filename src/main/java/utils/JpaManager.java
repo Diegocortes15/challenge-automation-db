@@ -10,7 +10,7 @@ public class JpaManager {
     private static EntityManager manager;
     private static EntityManagerFactory managerFactory;
 
-    public EntityManager getManager(){
+    public EntityManager getManager() {
         //Create new Entity Manager
         managerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         manager = managerFactory.createEntityManager();

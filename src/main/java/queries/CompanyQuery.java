@@ -1,140 +1,119 @@
 package queries;
 
-import entities.Company;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import utils.JpaManager;
+import entities.CompanyEntity;
+import utils.loggers.CompanyLogger;
 
 import java.util.List;
 
-public class CompanyQuery {
+public class CompanyQuery extends QuerySetup {
+    private CompanyEntity companyEntity;
+    private List<CompanyEntity> listCompanyEntity;
 
-    private JpaManager jpaManager = new JpaManager();
-    private EntityManager manager;
-    private Company company;
-    private List<Company> listCompany;
-    private EntityTransaction transaction;
-
-
-    public CompanyQuery(){
-        //Create new entity manager and transaction
-        manager = jpaManager.getManager();
-        transaction = manager.getTransaction();
+    public CompanyQuery() {
+        super();
     }
 
-    public List<Company> getAllCompanies() {
+    public List<CompanyEntity> getAllCompanies() {
 
         //Get all companies using 'createQuery' operation
-        listCompany =  manager.createQuery("FROM company").getResultList();
+        listCompanyEntity = manager.createQuery("FROM company").getResultList();
 
-        return listCompany;
+        return listCompanyEntity;
     }
 
-    public Company getCompanyById(int id) {
+    public CompanyEntity getCompanyById(int id) {
 
         //Get company by id using 'find' operation
-        company = manager.find(Company.class,id);
+        companyEntity = manager.find(CompanyEntity.class, id);
 
-        return company;
+        return companyEntity;
     }
 
-    public List<Company> getCompanyByName(String name) {
-
+    public List<CompanyEntity> getCompanyByName(String name) {
         //Get companies by name using 'createQuery' operation
-        listCompany = manager.createQuery("SELECT cm FROM company cm WHERE cm.name = :name").setParameter("name",name).getResultList();
-
-        return listCompany;
+        listCompanyEntity = manager.createQuery("SELECT cm FROM company cm WHERE cm.name = :name").setParameter("name", name).getResultList();
+        return listCompanyEntity;
     }
 
-    public int insertCompany(Company company){
-
+    public int insertCompany(CompanyEntity company) {
         //Begin transaction
         transaction.begin();
         //Create a new company using 'persist' operation
         manager.persist(company);
 
-        try{
+        try {
             //Commit transaction
             transaction.commit();
             return company.getId();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             //Rollback transaction
             transaction.rollback();
-            System.out.println("Database wasn't updated");
+            CompanyLogger.logger.info("Database was not updated");
             return -1;
-
         }
-
-
     }
 
-    public int updateCompanyName(int id,String name,String phoneNumber,String email, String address){
+    public int updateCompanyName(int id, String name, String phoneNumber, String email, String address) {
 
-        company = getCompanyById(id);
+        companyEntity = getCompanyById(id);
 
-        if(company != null){
+        if (companyEntity != null) {
             //Update company attributes
-            company.setName(name);
-            company.setPhoneNumber(phoneNumber);
-            company.setEmail(email);
-            company.setAddress(address);
+            companyEntity.setName(name);
+            companyEntity.setPhoneNumber(phoneNumber);
+            companyEntity.setEmail(email);
+            companyEntity.setAddress(address);
 
             //Begin transaction
             transaction.begin();
             //Update company using 'merge' operation
-            manager.merge(company);
+            manager.merge(companyEntity);
 
-            try{
+            try {
                 //Commit transaction
                 transaction.commit();
-                return company.getId();
+                return companyEntity.getId();
 
-            }catch(Exception e) {
+            } catch (Exception e) {
                 //Rollback transaction
                 transaction.rollback();
-                System.out.println("Database wasn't updated");
+                CompanyLogger.logger.info("Database was not updated");
                 return -1;
             }
 
-        }else{
-            System.out.println("Company wasn't found");
+        } else {
+            CompanyLogger.logger.info("Company was not found");
             return -1;
         }
-
     }
 
-    public int deleteCompany(int id){
+    public int deleteCompany(int id) {
 
-        company = getCompanyById(id);
+        companyEntity = getCompanyById(id);
 
-        if(company != null){
+        if (companyEntity != null) {
 
             //Begin transaction
             transaction.begin();
             //Delete company using 'remove' operation
-            manager.remove(company);
+            manager.remove(companyEntity);
 
-            try{
+            try {
                 //Commit transaction
                 transaction.commit();
-                return company.getId();
+                return companyEntity.getId();
 
-            }catch(Exception e) {
+            } catch (Exception e) {
                 //Rollback transaction
                 transaction.rollback();
-                System.out.println("Database wasn't updated");
+                CompanyLogger.logger.info("Database was not updated");
                 return -1;
             }
 
-        }else{
-            System.out.println("Company wasn't found");
+        } else {
+            CompanyLogger.logger.info("Company was not found");
             return -1;
         }
-
-
     }
-
-
-
 }
