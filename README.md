@@ -105,7 +105,6 @@ This project is a demo of how to implement JPA using Hibernate.
    3. Insert a new record in the table employee
    4. Update a record in the table employee
    5. Delete a record in the table employee
-   You can find a code example in [this repository](https://github.com/LuisaAcero2004/internship-jpa-hibernate)
 
    ### Run project
 
@@ -118,3 +117,6 @@ This project is a demo of how to implement JPA using Hibernate.
    allure serve
    ```
    
+   ## Reference
+   
+   * [Internship JPA Hibernate](https://github.com/LuisaAcero2004/internship-jpa-hibernate)
