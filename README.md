@@ -2,6 +2,13 @@
 
 This project is a demo of how to implement JPA using Hibernate.
 
+## Prerequisites
+
+   * JDK 11 (Environment variable)
+   * Maven (Environment variable)
+   * Allure (Environment variable)
+   * IDE (ex. IntelliJ)
+
 ## Challenge
 
 1. Create the table institution that will have a relationship with the table employee
